@@ -1,32 +1,52 @@
 <template>
-  <div>
-    <div class="container">
-      <div class="text-center">
-        <img src="~/assets/car.png" style="width: 250px; height: 250px" />
-        <h1 class="">Bem-vindo(a) a PS locadora de veículos</h1>
-        <h1>Aqui você pode:</h1>
-        <h3>Cadastrar e editar um veículo cadastrado.</h3>
-        <h3>
-          Listar os nossos veículos possíveis para alocação e alocar, caso
-          desejado.
-        </h3>
-      </div>
-    </div>
-  </div>
+    <!-- Teste, não sei se deixarei assim mesmo ou mesmo se usarei o coisa como componente-->
+    <nuxt-link :to="'/listing/' + id">
+        <article>
+            <div :style="{backgroundImage: 'url(' + photo +')'}"></div>
+            <div>
+                <h1> {{name}} </h1>
+                <p> {{id}} </p>
+                <p> {{description}} </p>
+                <p> {{quantity}} </p>
+                <p> {{brand}} </p>
+            </div>
+        </article>
+    </nuxt-link>
 </template>
 
 <script>
-import Logo from "~/components/Logo.vue";
-import VuetifyLogo from "~/components/VuetifyLogo.vue";
-
 export default {
-  components: {
-    Logo,
-  },
-};
+    name: 'CarsPreview',
+    props: { //variáveis tbm, permtindo reuso para filhos etc.
+       id: {
+           type: int,
+           required: true
+       },
+       name: {
+           type: String,
+           required: true
+       },
+       description: {
+           type: String,
+           required: true
+       },
+       brand: {
+           type: String,
+           required: true
+       },
+       photo: {
+           type: String,
+           required: true
+       },
+       quantity: {
+           type: int,
+           required: true
+       }
+  }
+}
 </script>
 
-<style scoped> 
+<style scoped>
 .intro {
   height: 300px;
   position: relative;
@@ -101,4 +121,5 @@ a:hover .post-content,
 a:active .post-content {
   background-color: #ccc;
 }
+
 </style>

@@ -19,6 +19,9 @@ import VuetifyLogo from '~/components/VuetifyLogo.vue'
 export default {
   components: {
     Logo
+  },
+  methods:{
+
   }
 }
 </script>
