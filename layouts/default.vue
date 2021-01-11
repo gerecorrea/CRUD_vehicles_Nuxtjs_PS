@@ -1,7 +1,9 @@
 <!-- Arquivo padrão criado pelo vuetify e reaproveitado para layout do projeto a ser desenvolvido.-->
 
 <template>
-  <v-app dark>  <!-- retirei o "dark" ali dentro que tinha-->
+  <v-app dark> 
+
+    <!-- Barra lateral hide/appear com listagem da navegação-->
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -9,6 +11,7 @@
       fixed
       app
     >
+      <!-- Navegação da gaveta/drawer: -->
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -26,62 +29,27 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+    <!-- Cria o ícone de clipped (3 riscos horizontais), esconde e mostrando a barra de menu lateral ao clicar: -->
     <v-app-bar
       :clipped-left="clipped"
       fixed
       app
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn
-        icon
-        @click.stop="miniVariant = !miniVariant"
-      >
-        <!-- <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon> -->
-      </v-btn>
-
-      <!-- <v-btn
-        icon
-        @click.stop="clipped = !clipped"
-      >
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="fixed = !fixed"
-      >
-        <v-icon>mdi-minus</v-icon>
-      </v-btn> -->
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <!-- <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      > 
-        <v-icon>mdi-menu</v-icon>
-      </v-btn> -->
+    <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      
+    <!-- Título da página com espaçamento até o final de ocupação: -->
+    <v-toolbar-title v-text="title" />
+    <v-spacer />
     </v-app-bar>
+
+    <!-- Tela responsável pelo conteúdo da aplicação em si: -->
     <v-main>
       <v-container>
-        <nuxt />
+        <nuxt /> <!-- Isso implica que o conteúdo das páginas/componentes que usam esse layout default.vue entram aqui-->
       </v-container>
     </v-main>
-    <!-- <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer> -->
+
+    <!-- Footer do layout:-->
     <v-footer
       :absolute="!fixed"
       app

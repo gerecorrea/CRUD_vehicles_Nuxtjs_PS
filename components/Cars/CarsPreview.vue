@@ -19,7 +19,7 @@ export default {
     name: 'CarsPreview',
     props: { //variáveis tbm, permtindo reuso para filhos etc.
        id: {
-           type: int,
+           type: String,
            required: true
        },
        name: {
@@ -39,7 +39,7 @@ export default {
            required: true
        },
        quantity: {
-           type: int,
+           type: String,
            required: true
        }
   }

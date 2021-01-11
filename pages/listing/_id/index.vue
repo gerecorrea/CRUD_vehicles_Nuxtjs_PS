@@ -1,8 +1,12 @@
 <template>
     <div class="container">
         <div>
+            <!-- Aqui seria onde temos todas as exibições de cada carro -->
             <h3> Descrição completa do carro </h3>
             <h3> Id deste: {{$route.params.id}} </h3>
+            <h3> Nome dele: {{$route.params.name}}</h3>
+            <h3> Nome dele: {{car.name}} </h3>
+            <!-- É para estar acessível pelo route.params -->
 
         </div>
     </div>
