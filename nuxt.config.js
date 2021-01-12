@@ -1,3 +1,5 @@
+// Aqui o arquivo de configuração do nuxt, fiz leves alterações nos links de css e temas do vuetify utilizados.
+
 import colors from 'vuetify/es5/util/colors'
 
 export default {
@@ -44,7 +46,7 @@ export default {
     theme: {
       dark: true,
       themes: {
-        dark: {
+        dark: { // Leves modificações no tema:
           primary: colors.blue.lighten5,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
@@ -58,7 +60,7 @@ export default {
           secondary: colors.grey.darken1,
           accent: colors.shades.black,
           error: colors.red.accent3,
-          background: colors.indigo.lighten5, // Not automatically applied
+          background: colors.indigo.lighten5
         }
       }
     }

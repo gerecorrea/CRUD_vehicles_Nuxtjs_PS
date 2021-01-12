@@ -44,7 +44,8 @@
 
     <!-- Tela responsável pelo conteúdo da aplicação em si: -->
     <v-main>
-      <v-container>
+      <v-container class="text-center">
+        <img src="~/assets/car.png" style="width: 150px; height: 150px" />
         <nuxt /> <!-- Isso implica que o conteúdo das páginas/componentes que usam esse layout default.vue entram aqui-->
       </v-container>
     </v-main>

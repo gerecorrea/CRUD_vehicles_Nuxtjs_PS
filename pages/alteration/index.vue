@@ -3,13 +3,13 @@
   <div>
     <div class="container">
       <div class="text-center">
-        <img src="~/assets/car.png" style="width:250px;height:250px;">
+        <!-- <img src="~/assets/car.png" style="width:250px;height:250px;"> -->
         <h1 class=""> Alteração de veículo</h1>
 
         <!-- NÃO TÁ OKKK -->
 
-        <input border="1" type="text" v-model="carID"> <!--o que for digitado aqui, grava na variavel carID declarada no vue-->
-          <button @click="onLoadCar">Load Car Number</button> <!--executa a função onLoadCar-->
+        <input border="1" type="text" v-model="productID" color="white" placeholder="Digite o ID do veículo">
+          <nuxt-link class="btn btn-warning btn-xs" :to="{name: 'alteration-id-edit', params: {id: productID}}">Editar veículo</nuxt-link>
 
         <!-- abaixo inserir todo o menu de cadastro -->
       </div>
@@ -28,12 +28,12 @@ export default {
   },
   data(){
     return {
-      carID: ''
+      productID: '', products: this.$store.state.products
     }
   },
   onLoadCar(){
       // Método para navegação para cada carro em específico
-      this.$router.push('/listing/' +this.carID)
+      this.$router.push('/listing/' + this.productID)
   }
 }
 </script>

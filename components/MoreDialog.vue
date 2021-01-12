@@ -14,24 +14,56 @@
         </template>
         <v-card>
             <v-card-title>
-            <span class="headline">Sobre o carro</span>
+            <span class="headline">Sobre o carro:</span>
             </v-card-title>
             <v-card-text>
                 <!-- Envia-se com v-bind o dado do nó pai e aqui pego com props e uso faço tal acesso ao objeto: -->
-                <h5> Nome: {{car.name}} </h5>
-                <h5> Marca: {{car.brand}} </h5>
-                <h5> Descrição: {{car.description}} </h5>
-                <h5> Cor: {{car.color}} </h5>
-                <h5> Ano: {{car.year}} </h5>
-                <h5> Placa: {{car.license_plate}} </h5>
-                <h5> Tipo: {{car.type}} </h5>
-                <h5> Valor do seguro anual: {{car.insurance}} </h5>
-                <h5> Valor da tabela FIPE: {{car.fipe}} </h5>
-                <h5> Quantidade: {{car.quantity}} </h5>
-                <h5> Foto: 
-                    <img v-bind:src="'https://br.pinterest.com/pin/373798837803616441/'">
-                    <img src="https://br.pinterest.com/pin/373798837803616441/">
-                </h5>
+                <v-row>
+                    <v-col cols="12" sm="4">
+                        <h4> Nome: {{car.name}} </h4>
+                    </v-col>
+                    <v-col cols="12" sm="4">
+                        <h4> Marca: {{car.brand}} </h4>
+                    </v-col>
+                    <v-col cols="12" sm="4">
+                        <h4> Placa: {{car.license_plate}} </h4>
+                    </v-col>
+
+                    <v-col cols="12" sm="4">
+                        <h5> Cor: {{car.color}} </h5>
+                    </v-col>
+                    <v-col cols="12" sm="4">
+                        <h5> Ano: {{car.year}} </h5>
+                    </v-col>
+                    <v-col cols="12" sm="4">
+                        <h5> Tipo: {{car.type}} </h5>
+                    </v-col>
+
+                    <v-col cols="12" sm="6">
+                        <h5> Valor do seguro anual: {{car.insurance}} </h5>
+                    </v-col>
+                    <v-col cols="12" sm="6">
+                        <h5> Valor da tabela FIPE: {{car.fipe}} </h5>
+                    </v-col>
+
+                    <v-col cols="12" sm="12">
+                        <h5> Descrição: {{car.description}} </h5>
+                    </v-col>
+
+                    <v-col cols="12" sm="12">
+                        <h6> Quantidade disponível: {{car.quantity}} </h6>
+                    </v-col>
+
+                    <h5> Foto: </h5>
+                    <img v-bind:src='car.photo' alt style="width:100px;height:100px;">
+                    <img src="/assets/corsa-2003.jpg"> <!-- Funciona, porém estático-->
+                    <img :src="car.photo" alt style="width:50px;height:50px;"> <!-- Era para funcionar :/-->
+                    
+
+
+                </v-row>
+
+                
                 
                 <!-- etcc -->
             </v-card-text>
@@ -60,3 +92,18 @@
     props: ['car']
   }
 </script>
+
+<style scoped>
+span{
+    color: white;
+    font: bold;
+}
+h6{
+    color: rgb(8, 80, 8);
+    font-size: 1.6em;
+}
+h4, h5{
+    color: #b88c0b;
+    font-size: 1.3em;
+}
+</style>
