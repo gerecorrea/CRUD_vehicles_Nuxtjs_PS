@@ -33,7 +33,7 @@
                 <th><center>Descrição</center></th>
                 <th><center>Marca</center></th>
                 <th><center>Quantidade</center></th>
-                <th class="col-sm-2"><center>Ações</center></th>
+                <th><center>Ações</center></th> <!--class="col-sm-2" -->
                 <th><center>Foto</center></th>
             </tr>
             </thead>

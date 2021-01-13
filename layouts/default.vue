@@ -45,6 +45,7 @@
     <!-- Tela responsável pelo conteúdo da aplicação em si: -->
     <v-main>
       <v-container class="text-center">
+        <!-- Images from flaticon.com -->
         <img src="~/assets/chopper.png" style="width: 150px; height: 150px" />
         <nuxt /> <!-- Isso implica que o conteúdo das páginas/componentes que usam esse layout default.vue entram aqui-->
       </v-container>
