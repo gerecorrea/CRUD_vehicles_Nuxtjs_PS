@@ -6,8 +6,6 @@
         <!-- <img src="~/assets/car.png" style="width:250px;height:250px;"> -->
         <h1 class=""> Alteração de veículo</h1>
 
-        <!-- NÃO TÁ OKKK -->
-
         <input border="1" type="text" v-model="productID" color="white" placeholder="Digite o ID do veículo">
           <nuxt-link class="btn btn-warning btn-xs" :to="{name: 'alteration-id-edit', params: {id: productID}}">Editar veículo</nuxt-link>
 
@@ -33,7 +31,7 @@ export default {
   },
   onLoadCar(){
       // Método para navegação para cada carro em específico
-      this.$router.push('/listing/' + this.productID)
+      this.$router.push('/alteration/' + this.productID + '/edit')
   }
 }
 </script>

@@ -39,18 +39,18 @@ export const mutations = {
         // Calculado o novo ID:
         let newId = Math.max(...id_aux) + 1; //Novo ID é o máximo do vertor id_aux + 1
         state.products.push({
-            id: newId
-          , name: car_aux.name
-          , description: car_aux.description
-          , brand: car_aux.brand
-          , quantity: car_aux.quantity
-          , color: car_aux.color
-          , year: car_aux.year
-          , license_plate: car_aux.license_plate
-          , type: car_aux.type
-          , insurance: car_aux.insurance
-          , fipe: car_aux.fipe
-          , photo: car_aux.photo
+            id: newId,
+            name: car_aux.name,
+            description: car_aux.description,
+            brand: car_aux.brand,
+            quantity: car_aux.quantity,
+            color: car_aux.color,
+            year: car_aux.year,
+            license_plate: car_aux.license_plate,
+            type: car_aux.type,
+            insurance: car_aux.insurance,
+            fipe: car_aux.fipe,
+            photo: car_aux.photo,
         });
     },
     UPDATE_CAR (state, car_aux) {

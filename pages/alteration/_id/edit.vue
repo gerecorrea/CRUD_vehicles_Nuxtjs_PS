@@ -3,13 +3,13 @@
 <template>
     <!-- Tela de edit, feita adiantadamente. Fica em STANDBY para finalização da listagem e início do backend, como requisitado
     Apesar disso, o usado aqui será o usado posteriormente, dado que ficou interessante o layout e funcional também.
-    Na prática, o botão de edit não tá realmente editando, deve ter alguma falha entre aqui e a ligação com o store (index.js) -->
+    Na prática, a edição e a ligação com o store (index.js) para isso estão ok, tá funfando -->
 
     <section class="text-center">
         <h2>Edição de veículo</h2>
         <!-- Forms no submit chama o método updateCar, que chama o mutation-->
         <form v-on:submit.prevent="updateCar">
-            <!-- Chama o component Formulario.vue, com props car_aux recebendo o objeto do veículo clonado -->
+            <!-- Chama o component Formulario.vue, com passagem de valor props car_aux recebendo o objeto do veículo clonado -->
             <Forms :caraux="vehicle"></Forms>
             <button type="submit" class="btn btn-primary">Salvar</button> <!-- Submit, aciona o v-on acima -->
             <nuxt-link to="/listing" class="btn btn-danger">Cancelar</nuxt-link> <!-- Volta à listagem, sem alteração -->
@@ -36,7 +36,7 @@ export default {
     },
     methods: {
         updateCar (e) {
-            this.$store.commit('UPDATE_CAR', this.product) // Commit na mutation responsável o objeto atual.
+            this.$store.commit('UPDATE_CAR', this.vehicle) // Commit na mutation responsável o objeto atual.
             this.$router.push('/listing') // Volta página ao menu de listagem
         }
     }

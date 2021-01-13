@@ -102,12 +102,6 @@
   export default {
     name: 'Forms',
     props: ['caraux'],
-    computed : {   
-        years () {
-            const year = new Date().getFullYear()
-            return Array.from({length: year - 1900}, (value, index) => 1901 + index)
-        }
-    },
     data(){
         return{
             types: ['Carro', 'Motocicleta'],
