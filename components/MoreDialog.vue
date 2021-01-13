@@ -1,4 +1,8 @@
 <template>
+    <!-- V-dialog original básico criado para testar funcionamento
+    Se layout não é final e será atualizado. -->
+
+
     <v-dialog
     v-model="dialog"
     width="800px"

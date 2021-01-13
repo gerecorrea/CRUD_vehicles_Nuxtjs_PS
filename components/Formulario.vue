@@ -6,67 +6,67 @@
       <!-- :rules são as funções chamadas para aplicação de restrições -->
       <v-col cols="12" sm="4">
         <div class="form-group">
-          <v-text-field v-model="caraux.name" :rules="max_general" color="white" label="Nome" required></v-text-field>
+          <v-text-field v-model="caraux.name" :rules="max_general" color="pink lighten-2" label="Nome" required></v-text-field>
         </div>
       </v-col>
 
       <v-col cols="12" sm="4">
         <div class="form-group">
-            <v-text-field v-model="caraux.brand" :rules="max_general" color="white" label="Marca" required></v-text-field>
+            <v-text-field v-model="caraux.brand" :rules="max_general" color="pink lighten-2" label="Marca" required></v-text-field>
         </div>
       </v-col>
 
       <v-col cols="12" sm="4">
         <div class="form-group">
-            <v-select v-model="caraux.quantity" :items="available_total" color="white" label="Quantidade disponível" required></v-select>    
+            <v-select v-model="caraux.quantity" :items="available_total" color="pink lighten-2" label="Quantidade disponível" required></v-select>    
         </div>
       </v-col>
 
       <v-col cols="12" sm="4">
         <div class="form-group">
-            <v-text-field v-model="caraux.color" :rules="max_general" color="white" label="Cor" required></v-text-field>
+            <v-text-field v-model="caraux.color" :rules="max_general" color="pink lighten-2" label="Cor" required></v-text-field>
         </div>
       </v-col>
 
       <v-col cols="12" sm="4">
         <div class="form-group">
-            <v-select v-model="caraux.year" :items="yearss" color="white" label="Ano" required></v-select>    
+            <v-select v-model="caraux.year" :items="yearss" color="pink lighten-2" label="Ano" required></v-select>    
         </div>
       </v-col>
 
       <v-col cols="12" sm="4">
         <div class="form-group">
-            <v-text-field v-model="caraux.license_plate" :rules="max_license" color="white" label="Placa" required></v-text-field>
+            <v-text-field v-model="caraux.license_plate" :rules="max_license" color="pink lighten-2" label="Placa" required></v-text-field>
         </div>
       </v-col>
 
       <v-col cols="12" sm="4">
         <div class="form-group">
-            <v-select v-model="caraux.type" :items="types" color="white" label="Tipo de veículo" required></v-select>          
+            <v-select v-model="caraux.type" :items="types" color="pink lighten-2" label="Tipo de veículo" required></v-select>          
         </div>
       </v-col>
 
       <v-col cols="12" sm="4">
         <div class="form-group">
-            <v-text-field v-model="caraux.insurance" color="white" label="Valor do seguro" required></v-text-field>
+            <v-text-field v-model="caraux.insurance" color="pink lighten-2" label="Valor do seguro" required></v-text-field>
         </div>
       </v-col>
 
       <v-col cols="12" sm="4">
         <div class="form-group">
-            <v-text-field v-model="caraux.fipe" color="white" label="Valor da tabela FIPE" required></v-text-field>
+            <v-text-field v-model="caraux.fipe" color="pink lighten-2" label="Valor da tabela FIPE" required></v-text-field>
         </div>
       </v-col>
 
       <v-col cols="12" sm="6">
         <div class="form-group">
-            <v-text-field v-model="caraux.photo" color="white" label="Link da foto" required></v-text-field>
+            <v-text-field v-model="caraux.photo" color="pink lighten-2" label="Link da foto" required></v-text-field>
         </div>
       </v-col>
 
       <v-col cols="12" sm="6">
         <div class="form-group">
-          <v-text-field v-model="caraux.description"  :rules="max_description" color="white" label="Descrição" required></v-text-field>
+          <v-text-field v-model="caraux.description"  :rules="max_description" color="pink lighten-2" label="Descrição" required></v-text-field>
         </div>
       </v-col>
 

@@ -1,4 +1,6 @@
-// Arquivo que contém todo o armazenamento de dados da aplicação:
+/* Script de armazenamento e alteração dos dados. 
+O foco no primeiro momento é só a listagem, pois a alteração e cadastramento será feito via backend
+No momento foi realizado adiantadamente as mutations básicas de cadastro e add, porém ficam em standby.*/
 
 // Poderia ser:
 /*

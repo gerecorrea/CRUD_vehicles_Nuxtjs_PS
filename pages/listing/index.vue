@@ -55,7 +55,7 @@
                 <nuxt-link class="btn btn-warning btn-xs" :to="{name: 'alteration-id-edit', params: {id: car.id, product: products}}">Editar</nuxt-link>
 
                 <!-- INFO - v-dialog: -->
-                <MoreDialog v-bind:car="car"/>
+                <MoreDialog2 v-bind:car="car" class="btn btn-primary btn-xs" />
 
                 <!-- <nuxt-link class="btn btn-primary btn-xs" :to="{name: 'alteration/id', params: {id: car.id}}">See</nuxt-link> -->
                 <!-- <button class="btn btn-primary btn-xs" @click="onLoadCar">See</button> executa a função onLoadCar -->
@@ -84,11 +84,13 @@
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
 import MoreDialog from '~/components/MoreDialog.vue'
+import MoreDialog2 from '~/components/MoreDialog2.vue'
 
 export default {
     components: {
         Logo,
-        MoreDialog
+        MoreDialog,
+        MoreDialog2
     },
     data() {
         // Dados instanciados inicialmente para uso:
@@ -127,9 +129,9 @@ export default {
     }
     
     td:hover, th:hover{
-        background-color:#555;
+        background-color:#222;
         /* font-size: 1.15em; */
-        color: #b88c0b;
+        color: #F9A825;
     }
 
 </style>
