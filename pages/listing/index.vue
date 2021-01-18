@@ -91,6 +91,103 @@
             </vue-good-table>
         </div>
 
+        <!-- ################# Parte da ligação com backend - Still not working: ############## -->
+
+        <div>
+            <button v-on:click="list_all" class="btn btn-primary btn-xs">Lista normal</button>
+            <button v-on:click="list_all_service" class="btn btn-primary btn-xs">Lista pelo service</button>
+            <!-- <button v-on:click="list_moreonetry" class="btn btn-primary btn-xs">Lista pelo service Listagem4</button> -->
+            <!-- <button v-on:click="list_springboottutorial" class="btn btn-primary btn-xs">Lista pelo service Listagem5</button> -->
+            
+            <h4>Listagem: {{list_data}}</h4>
+            <h4>Listagem2: {{list_test}}</h4>
+            <h4>Listagem3: {{data_anothertry}}</h4>
+            <!-- <h4> Listagem4- more one test: {{list_moreone}} </h4> -->
+            <h4> Listagem5 - {{list_sbt}} </h4>
+        </div>
+        <div>
+            <vue-good-table
+            :columns="columns"
+            :rows="listagem"
+            styleClass="vgt-table striped"
+            theme="default">
+                <!-- Aqui poderia ser car in products, porém como quero aplicação de filtro itero sobre o computed carsProducts -->
+                <template slot="table-row" slot-scope="props">
+                    <span v-if="props.column.field == 'actions'">
+                        <!-- Caso o campo seja actions, quero mostrar os botões de ação: -->
+                        <nuxt-link class="btn btn-warning btn-xs" :to="{name: 'alteration-id-edit', params: {id: props.column.id}}">Editar</nuxt-link>
+                        <MoreDialog2 v-bind:car="products" class="btn btn-primary btn-xs" />
+                    </span>
+                    <span v-else-if="props.column.field == 'photo'">
+                        <!-- Caso o campo seja foto, queremos mostrar uma imagem, não string: -->
+                        <img :src="props.column.photo" alt style="width:45px;height:35px;"> 
+                    </span>
+                    <span v-else>
+                        <!-- Demonstração normal do atributo: -->
+                        {{props.formattedRow[props.column.field]}} 
+                        
+                    </span>
+                    
+
+                </template>
+            </vue-good-table>
+        </div>
+
+        <div>
+            <vue-good-table
+            :columns="columns"
+            :rows="listagem_service"
+            styleClass="vgt-table striped"
+            theme="default">
+                <!-- Aqui poderia ser car in products, porém como quero aplicação de filtro itero sobre o computed carsProducts -->
+                <template slot="table-row" slot-scope="props">
+                    <span v-if="props.column.field == 'actions'">
+                        <!-- Caso o campo seja actions, quero mostrar os botões de ação: -->
+                        <nuxt-link class="btn btn-warning btn-xs" :to="{name: 'alteration-id-edit', params: {id: props.column.id}}">Editar</nuxt-link>
+                        <MoreDialog2 v-bind:car="products" class="btn btn-primary btn-xs" />
+                    </span>
+                    <span v-else-if="props.column.field == 'photo'">
+                        <!-- Caso o campo seja foto, queremos mostrar uma imagem, não string: -->
+                        <img :src="props.column.photo" alt style="width:45px;height:35px;"> 
+                    </span>
+                    <span v-else>
+                        <!-- Demonstração normal do atributo: -->
+                        {{props.formattedRow[props.column.field]}} 
+                    </span>
+                    
+
+                </template>
+            </vue-good-table>
+        </div>
+
+        <div>
+            <vue-good-table
+            :columns="columns"
+            :rows="veiculoss"
+            styleClass="vgt-table striped"
+            theme="default">
+                <!-- Aqui poderia ser car in products, porém como quero aplicação de filtro itero sobre o computed carsProducts -->
+                <template slot="table-row" slot-scope="props">
+                    <span v-if="props.column.field == 'actions'">
+                        <!-- Caso o campo seja actions, quero mostrar os botões de ação: -->
+                        <nuxt-link class="btn btn-warning btn-xs" :to="{name: 'alteration-id-edit', params: {id: props.column.id}}">Editar</nuxt-link>
+                        <MoreDialog2 v-bind:car="products" class="btn btn-primary btn-xs" />
+                    </span>
+                    <span v-else-if="props.column.field == 'photo'">
+                        <!-- Caso o campo seja foto, queremos mostrar uma imagem, não string: -->
+                        <img :src="props.column.photo" alt style="width:45px;height:35px;"> 
+                    </span>
+                    <span v-else>
+                        <!-- Demonstração normal do atributo: -->
+                        {{props.formattedRow[props.column.field]}} 
+                    </span>
+                    
+
+                </template>
+            </vue-good-table>
+        </div>
+
+
     </div>
 
 </template>
@@ -102,6 +199,9 @@ import MoreDialog from '~/components/MoreDialog.vue'
 import MoreDialog2 from '~/components/MoreDialog2.vue'
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table';
+import {backendHost} from '../../api/config.js'
+import vehicleService from '../../services/vehicleService.js' //service para backend
+import axios from '@nuxtjs/axios'
 
 export default {
     components: {
@@ -115,6 +215,12 @@ export default {
         return{
             products: this.$store.state.products, 
             searchKey: '',
+            listagem: '',
+            listagem_service: '',
+            list_test: '',
+            data_anothertry: '',
+            list_moreone: '',
+            veiculoss: [],
             columns: [
                 {
                 label: 'ID',
@@ -156,7 +262,49 @@ export default {
         }
     },
     methods: {
-
+        async getDataListAll(){
+            const response_test = await this.$axios.$get(backendHost + '/vehicles')
+            const {list_test} = response_test
+        this.list_test = list_test
+        },
+        async list_all() {
+            const listagem = await this.$axios.get(backendHost + '/vehicles')
+            this.listagem = listagem
+            this.$router.push('')
+        },
+        async list_all_service(){
+            const listagem_service = await vehicleService.list();
+            this.listagem_service = listagem_service;
+            this.$router.push('')
+        },
+        list_anothertest(){
+            return axios.get(backendHost+'/vehicles').then((response) =>{
+                return {list_data: response.data.results}
+            })
+        },
+        async list_anothertry(){
+            let data_anothertry = (await $axios.get(backendHost+'/vehicles')).data
+            this.data_anothertry = data_anothertry
+        },
+        // list_moreonetry(){
+        //     let data = vehicleService.list();
+        //     this.list_moreone = data
+        //     return data
+        //     //this.$router.push('')
+        // },
+        // list_springboottutorial(){
+        //     vehicleService.list().then(response => {console.log(response.data)})
+        //     this.list_sbt = vehicleService.list()
+        // },
+        list_veiculoss(){
+            //Possivelmente a que chegou mais perto! Se ativar a linha abaixo, dá os erros em vehicleService.js
+            //console.log(vehicleService.list().then(response => {this.veiculoss = response.data}))
+        }
+    },
+    created() {
+        //this.list_springboottutorial();
+        //this.list_anothertest();
+        this.list_veiculoss();
     },
     computed: {
         carsProducts(){
