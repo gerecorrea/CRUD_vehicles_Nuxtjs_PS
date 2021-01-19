@@ -2,6 +2,20 @@
 
 import colors from 'vuetify/es5/util/colors'
 
+//Realização da configuração básico das url do axios.
+let backendHost = ''
+
+const applicationProfile = process.env.NODE_ENV
+
+switch(applicationProfile){
+    case 'development':
+        backendHost = "http://localhost:8080"
+        break
+    case 'heroku':
+        backendHost = "https://crud-ps-rental-vehic-backend.herokuapp.com/"
+        break
+}
+
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -25,6 +39,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    '~/plugins/vehicle-service'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -68,7 +83,11 @@ export default {
   },
 
   axios: {
-    baseURL: 'http://localhost:3000'
+    //baseURL: 'http://localhost:3000'
+    baseURL: backendHost,
+    // headers:{
+    //   'Access-Control-Allow-Origin': '*',
+    // }
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

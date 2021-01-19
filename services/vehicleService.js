@@ -1,23 +1,22 @@
-// Neste arquivo temos a importação da confguração do axios (api/config) e 
-// é realizado os endpoints do backend, para encaminhamento.
-// Todos os métodos vão de acordo com os objetos e caminhos requeridos lá configurados no backend
-
-import {backendHost} from '../api/config.js' // Para pegar a url padrão conforme a plataforma
+let vehicle
 
 export default{
+    setVehicle: (newVehicle) => {
+        vehicle = newVehicle;
+    },
     list: () => {
-        return backendHost.get(backendHost +'vehicles')
+        return vehicle.get('vehicles')
     },
     listById: (uuid) => {
-        return backendHost.get('vehicles/' + uuid)
+        return vehicle.get('vehicles/' + uuid)
     },
     create:(vehicle) => {
-        return backendHost.post('vehicles', vehicle)
+        return vehicle.post('vehicles', vehicle)
     },
     update:(uuid, vehicle) => {
-        return backendHost.put('vehicles/' + uuid, vehicle)
+        return vehicle.put('vehicles/' + uuid, vehicle)
     },
     delete:(uuid) => {
-        return backendHost.delete('vehicles/', uuid)
+        return vehicle.delete('vehicles/', uuid)
     }
 }

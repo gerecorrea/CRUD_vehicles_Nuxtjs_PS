@@ -1,4 +1,7 @@
 <template>
+
+    <!-- Tela de cadastro!! -->
+
   <div>
     <div class="container">
       <div class="text-center">
@@ -8,7 +11,8 @@
         <form v-on:submit.prevent="createCar">
             <!-- Chama o component Formulario.vue, com passagem de valor props car_aux recebendo o objeto do veículo clonado -->
             <Forms :caraux="vehicle"></Forms>
-            <button type="submit" class="btn btn-primary">Cadastrar</button> <!-- Submit, aciona o v-on acima -->
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <ConfirmButton type="submit" class="btn btn-primary">CadastrarDialog</ConfirmButton> <!-- Submit, aciona o v-on acima -->
             <nuxt-link to="/home" class="btn btn-danger">Cancelar</nuxt-link> <!-- Volta à listagem, sem alteração -->
         </form>
 
@@ -23,11 +27,13 @@
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
 import Forms from '~/components/Formulario.vue'
+import ConfirmButton from '~/components/ConfirmButton.vue'
 
 export default {
   components: {
     Logo,
-    Forms
+    Forms,
+    ConfirmButton
   },
   data(){
       return{

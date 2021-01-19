@@ -77,13 +77,13 @@ export default {
         {
           icon: 'mdi-account-check',
           title: 'Cadastro de veículo',
-          to: '/register'
+          to: '/vehicles'
         },
-        {
-          icon: 'mdi-account-edit',
-          title: 'Alteração de veículo',
-          to: '/alteration'
-        },
+        // {
+        //   icon: 'mdi-account-edit',
+        //   title: 'Alteração de veículo',
+        //   to: '/alteration'
+        // },
         {
           icon: 'mdi-format-align-justify',
           title: 'Listagem de veículos',
