@@ -17,6 +17,7 @@ export default{
         return vehicle.put('vehicles/' + uuid, vehicle)
     },
     delete:(uuid) => {
-        return vehicle.delete('vehicles/', + uuid)
+        return vehicle.delete('vehicles/' + uuid)
     }
+    // Obs: possivelmente '$' antes dos métodos diferente de get (este é o padrão) . verificar amanhã
 }

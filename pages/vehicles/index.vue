@@ -8,11 +8,11 @@
         <!-- <img src="~/assets/car.png" style="width:250px;height:250px;"> -->
         <h1 class=""> Cadastro de veículo</h1>
         <!-- Forms no submit chama o método updateCar, que chama o mutation-->
-        <form v-on:submit.prevent="create_vehicle">
+        <form v-on:submit.prevent="create_vehicle_without_service">
             <!-- Chama o component Formulario.vue, com passagem de valor props car_aux recebendo o objeto do veículo clonado -->
             <Forms :caraux="vehicle"></Forms>
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
-            <ConfirmButton type="submit" class="btn btn-primary">CadastrarDialog</ConfirmButton> <!-- Submit, aciona o v-on acima -->
+            <button type="submit" class="btn btn-primary">Cadastrar</button><!-- Submit, aciona o v-on acima -->
+            <!-- <ConfirmButton type="submit" class="btn btn-primary">CadastrarDialog</ConfirmButton>  -->
             <nuxt-link to="/home" class="btn btn-danger">Cancelar</nuxt-link> <!-- Volta à listagem, sem alteração -->
         </form>
 
@@ -55,14 +55,10 @@ export default {
       }
   },
   methods:{
-        createCar (e) {
-            //this.$store.commit('UPDATE_CAR', this.vehicle) // Commit na mutation responsável o objeto atual.
-            this.$router.push('/listing') // Volta página ao menu de listagem
-        },
         create_vehicle(){
           // A resp é para limpar os dados!
           vehicleService.create(this.vehicle).then(resp => {
-            this.vehicle = resp.data;
+            //this.vehicle = resp.data;
             this.$router.push('/listing');
             //this.vehicle.name = ''
             // this.vehicle.description = ''
@@ -77,13 +73,13 @@ export default {
             // this.vehicle.photo= ''
           })
         },
-
-        salvar(){
-            //função salvar exemplo pra uso posterior (adaptar)
-            vehicleService.create(this.usuario).then(resp => {
-                this.usuario.nome = ''
-                this.usuario.email = ''
-            })
+        async create_vehicle_async(){
+          await vehicleService.create(this.vehicle)
+        },
+        create_vehicle_without_service(){
+          // Eita, assim tá funcionando
+          this.$axios.$post('vehicles', this.vehicle);
+          this.$router.push('/listing');
         }
   }
 }

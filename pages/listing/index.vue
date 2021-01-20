@@ -8,11 +8,6 @@
 
         </div>
 
-        <!-- Botão para listar os carros: -->
-        <div>
-            <button @click="getVehicles" class="btn btn-primary btn-xs">Listar carros</button>
-        </div>
-
         <!-- Para busca e adição de novo carro: -->
         <div class="padding" >
             <v-row>
@@ -62,7 +57,7 @@
                         <MoreDialog2 v-bind:car="car" class="btn btn-primary btn-xs" />
 
                         <!-- Botão de delete - somente teste ainda -->
-                        <button @click="deleteVehicle(car.id) " id="action-button" title="Delete" class="btn btn-danger btn-sm" role="button">Excluir</button>
+                        <button @click="delete_vehicle_without_service(car.id) " id="action-button" title="Delete" class="btn btn-danger btn-sm" role="button">Excluir</button>
                     </div>
                 </td>
                 <td>
@@ -74,7 +69,7 @@
             </tbody>
         </table>
 
-
+        <!-- AS DUAS TABELAS ABAIXO SÃO APENAS PARA TESTE/PODEM SER ÚTEIS -->
 
         <!-- Aqui uma imeplmentação via uso de tabelas normais de html, usando componentes v-for para iteração,
         assim como outros para navegação e envios de dados. Está tudo certo. -->
@@ -115,8 +110,6 @@
             </tr>
             </tbody>
         </table>
-
-        <button @click="teste" class="btn btn-primary btn-xs">Teste listagem axios</button>
 
         <!-- Abaixo a listagem via vue-good-table, uma tentativa de implementação. Os botões de navegação não estão chegando aos alvos: -->
         <div>
@@ -255,6 +248,12 @@ export default {
             //Teste do delete, tá retornando 405 - método não permitido
             vehicleService.delete(id);
             this.$router.push('/listing')
+        },
+        delete_vehicle_without_service(id){
+            // Taambém funcionando sem o service!
+            this.$axios.$delete('vehicles/' + id)
+            this.$router.push('/listing');
+            this.getVehicles();
         },
 
 

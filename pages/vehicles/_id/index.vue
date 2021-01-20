@@ -10,7 +10,7 @@
     <section class="text-center">
         <h2>Edição de veículo</h2>
         <!-- Forms no submit chama o método updateCar, que chama o mutation-->
-        <form v-on:submit.prevent="update_vehicle">
+        <form v-on:submit.prevent="update_vehicle_without_service">
             <!-- Chama o component Formulario.vue, com passagem de valor props car_aux recebendo o objeto do veículo clonado -->
             <Forms :caraux="vehicle"></Forms>
             <button type="submit" class="btn btn-primary">Salvar</button> <!-- Submit, aciona o v-on acima -->
@@ -63,10 +63,6 @@ export default {
     },
     
     methods: {
-        updateCar (e) {
-            this.$store.commit('UPDATE_CAR', this.vehicle) // Commit na mutation responsável o objeto atual.
-            this.$router.push('/listing') // Volta página ao menu de listagem
-        },
         update_vehicle(){
           vehicleService.update(this.vehicle.id, this.vehicle)
           this.$router.push('/listing')
@@ -84,18 +80,20 @@ export default {
             );
             this.$router.push('/listing');
         },
+        update_vehicle_without_service(){
+            // Tá funfando também.
+            this.$axios.$put('vehicles/'+ this.vehicle.id, this.vehicle);
+            this.$router.push('/listing');
+        },
         init(){
             vehicleService.listById(this.$route.params.id).then(response => {
                 this.vehicle = response.data
             });
         },
-        beforeRouteUpdate(){
-            // Para quando rota muda e quero fazer algo antes de qualquer ação:
-            // No caso a ideia seria carregar os dados do veículo atual antes
-            vehicleService.listById(to.params.id).then(response => {
-                this.vehicle = response.body
-            });
-            next();
+        updateCar (e) {
+            // Método antigo, com uso de store.
+            this.$store.commit('UPDATE_CAR', this.vehicle) // Commit na mutation responsável o objeto atual.
+            this.$router.push('/listing') // Volta página ao menu de listagem
         },
     },
     mounted(){
