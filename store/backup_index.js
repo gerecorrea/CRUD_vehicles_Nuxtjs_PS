@@ -18,8 +18,6 @@ No momento foi realizado adiantadamente as mutations básicas de cadastro e add,
     }
   })
 */
-import vehicleService from '~/services/vehicleService.js'
-import vue from 'vuex'
 
 export const state = () => ({
     products: [
@@ -27,15 +25,10 @@ export const state = () => ({
         {id: 2, name: 'Polo', description: 'Motor 1.6, sedan, grande, confortline, bom para viagens', brand: 'Volkswagen', quantity: 3, license_plate: "MHE5467", year: 2003, type: "Carro", color: "Preto", fipe: 5980, insurance: 344, photo: '/assets/car.png'},
         {id: 3, name: 'Uno', description: 'Motor 1.0, hatch, pequeno e econômico', brand: 'Fiat', quantity: 6, license_plate: "MHE5467", year: 2003, type: "Carro", color: "Preto", fipe: 5980, insurance: 344, photo: '/assets/car.png'},
         {id: 4, name: 'Charger R/T', description: 'Motor 3.4, potência, alto consumo, baixo conforto, estilo', brand: 'Dodge', quantity: 1, license_plate: "MHE5467", year: 2003, type: "Carro", color: "Preto", fipe: 5980, insurance: 344, photo: '/assets/car.png'}
-    ],
-    car_list:[],
-    msg: 'Algum erro ocorreu!'
+    ]
 })
 
 export const mutations = {
-    set_car_list(state, arg){
-      state.car_list = arg;
-    },
     ADD_CAR (state, car_aux) {
         /* Função para adição de um novo veículo*/
 
@@ -81,16 +74,7 @@ export const mutations = {
 }
 
 export const actions = {
-    nuxtServerInit() {
-
-        //commit('ADD_CAR', {name: 'Palio', description: 'Motor 1.0, horrível', brand: 'Fiat', quantity: 2, color: 'Preto', year: 2009, license_plate: 'MHE7865', type: 'Carro', insurance: 4312, fipe: 321, photo: "/assets/car.png"})
-      
-        //   return vehicleService.list().then((res) => {if(res.data[0]){
-      //     vuex_context.commit('set_car_list', res.data[1])
-      //   }else{nuxt_context.error({message: res.data[1]})}
-      //   }).catch((err) =>{
-      //     nuxt_context.error({message: err.message})
-      //   })
-      // }
-    }
+    nuxtServerInit ({ commit }, { req }) {
+        commit('ADD_CAR', {name: 'Palio', description: 'Motor 1.0, horrível', brand: 'Fiat', quantity: 2, color: 'Preto', year: 2009, license_plate: 'MHE7865', type: 'Carro', insurance: 4312, fipe: 321, photo: "/assets/car.png"})
+      }
 }

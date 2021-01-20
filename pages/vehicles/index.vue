@@ -8,7 +8,7 @@
         <!-- <img src="~/assets/car.png" style="width:250px;height:250px;"> -->
         <h1 class=""> Cadastro de veículo</h1>
         <!-- Forms no submit chama o método updateCar, que chama o mutation-->
-        <form v-on:submit.prevent="createCar">
+        <form v-on:submit.prevent="create_vehicle">
             <!-- Chama o component Formulario.vue, com passagem de valor props car_aux recebendo o objeto do veículo clonado -->
             <Forms :caraux="vehicle"></Forms>
             <button type="submit" class="btn btn-primary">Cadastrar</button>
@@ -25,9 +25,10 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+//import VuetifyLogo from '~/components/VuetifyLogo.vue'
 import Forms from '~/components/Formulario.vue'
 import ConfirmButton from '~/components/ConfirmButton.vue'
+import vehicleService from '@/services/vehicleService'
 
 export default {
   components: {
@@ -37,13 +38,52 @@ export default {
   },
   data(){
       return{
-        "vehicle": {id: null, name: '', description: '', brand: '', quantity: null, license_plate: '', year: null, type: '', color: '', fipe: null, insurance: null, photo: ''} 
+        vehicle: {name: '', description: '', brand: '', quantity: null, license_plate: '', year: null, type: '', color: '', fipe: null, insurance: null, photo: ''},
+        // vehicle:{
+        //   name: '',
+        //   description: '',
+        //   brand: '',
+        //   quantity: null,
+        //   color: '',
+        //   year: null,
+        //   license_plate: '',
+        //   type: '',
+        //   insurance: null,
+        //   fipe: null,
+        //   photo: '',
+        // }
       }
   },
   methods:{
         createCar (e) {
             //this.$store.commit('UPDATE_CAR', this.vehicle) // Commit na mutation responsável o objeto atual.
             this.$router.push('/listing') // Volta página ao menu de listagem
+        },
+        create_vehicle(){
+          // A resp é para limpar os dados!
+          vehicleService.create(this.vehicle).then(resp => {
+            this.vehicle = resp.data;
+            this.$router.push('/listing');
+            //this.vehicle.name = ''
+            // this.vehicle.description = ''
+            // this.vehicle.brand= ''
+            // this.vehicle.quantity= null
+            // this.vehicle.color= ''
+            // this.vehicle.year= null
+            // this.vehicle.license_plate= ''
+            // this.vehicle.type= ''
+            // this.vehicle.insurance= null
+            // this.vehicle.fipe= null
+            // this.vehicle.photo= ''
+          })
+        },
+
+        salvar(){
+            //função salvar exemplo pra uso posterior (adaptar)
+            vehicleService.create(this.usuario).then(resp => {
+                this.usuario.nome = ''
+                this.usuario.email = ''
+            })
         }
   }
 }

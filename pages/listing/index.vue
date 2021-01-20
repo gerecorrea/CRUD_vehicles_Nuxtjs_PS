@@ -8,11 +8,16 @@
 
         </div>
 
+        <!-- Botão para listar os carros: -->
+        <div>
+            <button @click="getVehicles" class="btn btn-primary btn-xs">Listar carros</button>
+        </div>
+
         <!-- Para busca e adição de novo carro: -->
         <div class="padding" >
             <v-row>
                 <v-col cols="12" sm="9">
-                    <input v-model="searchKey" class="form-control" id="search-element" placeholder="Buscar carro por nome" requred/>
+                    <input v-model="searchKey" class="form-control" id="search-element" placeholder="Buscar carro por nome" required/>
                 </v-col>
 
                 <v-col cols="12" sm="3">
@@ -23,6 +28,53 @@
                 </v-col>
             </v-row>
         </div>
+
+        <!-- Table real e final que será utilizado, com vehicles_list puxando do backend: -->
+        <table class="table" border="1">
+            <thead>
+            <tr>
+                <th><center>Nome</center></th>
+                <th><center>Descrição</center></th>
+                <th><center>Marca</center></th>
+                <th><center>Tipo</center></th>
+                <th><center>Quantidade</center></th>
+                <th><center>Ações</center></th>
+                <th><center>Foto</center></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="car in vehicles_list" :key="car.id">
+                <!-- Aqui poderia ser car in products, porém como quero aplicação de filtro itero sobre o computed carsProducts -->
+                <td> {{car.name}} </td>
+                <td> {{car.description}} </td>
+                <td> {{car.brand}} </td>
+                <td> {{car.type}} </td>
+                <td> {{car.quantity}} </td>
+                <td>
+                    <div>
+                        <!-- Editar - FUNFANDO: -->
+                        <nuxt-link class="btn btn-warning btn-sm" :to="{name: 'vehicles-id', params: {id: car.id}}">Editar</nuxt-link>
+
+                        <!-- Novo botão de edit, vendo se assim fica melhor - FUNFANDO-->
+                        <!-- <button id="action-button" title="Edit" class="btn btn-warning btn-xs" role="button" @click="editVehicle(car.id)">Editar2</button> -->
+                        
+                        <!-- Botão INFO - v-dialog v-bind:(props que recebe (car) = "objeto lançado daqui (car)"): -->
+                        <MoreDialog2 v-bind:car="car" class="btn btn-primary btn-xs" />
+
+                        <!-- Botão de delete - somente teste ainda -->
+                        <button @click="deleteVehicle(car.id) " id="action-button" title="Delete" class="btn btn-danger btn-sm" role="button">Excluir</button>
+                    </div>
+                </td>
+                <td>
+                    <!-- <img src="~/assets/corsa-2003.jpg" style="width:25px;height:25px;"> -->
+                    <!-- uso de imagem com v-bind implicito para interpolar atributos-->
+                    <img :src="car.photo" alt style="width:30px;height:30px;"> 
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
 
         <!-- Aqui uma imeplmentação via uso de tabelas normais de html, usando componentes v-for para iteração,
         assim como outros para navegação e envios de dados. Está tudo certo. -->
@@ -39,7 +91,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="car in list_new_try_1901" :key="car.id">
+            <tr v-for="car in carsProducts" :key="car.id">
                 <!-- Aqui poderia ser car in products, porém como quero aplicação de filtro itero sobre o computed carsProducts -->
                 <td> {{car.id}} </td>
                 <td> {{car.name}} </td>
@@ -116,20 +168,19 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-import MoreDialog from '~/components/MoreDialog.vue'
+//import VuetifyLogo from '~/components/VuetifyLogo.vue'
+//import MoreDialog from '~/components/MoreDialog.vue'
 import MoreDialog2 from '~/components/MoreDialog2.vue'
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table';
 //import {backendHost} from '../../api/config.js'
 
 import vehicleService from '@/services/vehicleService' //service para backend
-//import axios from '@nuxtjs/axios'
 
 export default {
     components: {
         Logo,
-        MoreDialog,
+        //MoreDialog,
         MoreDialog2,
         VueGoodTable
     },
@@ -138,12 +189,8 @@ export default {
         return{
             products: this.$store.state.products, 
             searchKey: '',
-            listagem: '',
-            listagem_service: '',
-            list_test: '',
-            data_anothertry: '',
-            list_moreone: '',
-            veiculoss: [],
+            //vehicles_list: this.$store.state.car_list,
+            vehicles_list: [],
             columns: [
                 {
                 label: 'ID',
@@ -185,52 +232,44 @@ export default {
         }
     },
     methods: {
-        list_new_try_1901(){
-            return vehicleService.list()
+        getVehicles(){
+            // Função requisitando do backend que tá funcionando e listando
+            // Precisa tratar possíveiserros (sucesso/erro) nela ainda.
+            vehicleService.list().then(res => {
+                this.vehicles_list = res.data
+                //console.log(this.vehicles_list)
+                //() => {
+                //this.alert.isOpen = true;
+                  //  this.alert.msg = "Problema ao requisitar os dados!"
+            //});
+            })
         },
+
+        editVehicle(id){
+            // Apenas enviando o id para pagina de edição
+            // No momento não estou usando, pois a outa está sendo mais efetiva.
+            this.$router.push('/vehicles/' + id)
+        },
+
+        deleteVehicle(id){
+            //Teste do delete, tá retornando 405 - método não permitido
+            vehicleService.delete(id);
+            this.$router.push('/listing')
+        },
+
+
         teste(){
             console.log("I'm here");
             vehicleService.list();
         }
-        // async getDataListAll(){
-        //     const response_test = await this.$axios.$get(backendHost + '/vehicles')
-        //     const {list_test} = response_test
-        // this.list_test = list_test
-        // },
-        // async list_all() {
-        //     const listagem = await this.$axios.get(backendHost + '/vehicles')
-        //     this.listagem = listagem
-        //     this.$router.push('')
-        // },
-        // async list_all_service(){
-        //     const listagem_service = await vehicleService.list();
-        //     this.listagem_service = listagem_service;
-        //     this.$router.push('')
-        // },
-        // list_anothertest(){
-        //     return axios.get(backendHost+'/vehicles').then((response) =>{
-        //         return {list_data: response.data.results}
-        //     })
-        // },
         // async list_anothertry(){
         //     let data_anothertry = (await $axios.get(backendHost+'/vehicles')).data
         //     this.data_anothertry = data_anothertry
-        // },
-        // // list_moreonetry(){
-        // //     let data = vehicleService.list();
-        // //     this.list_moreone = data
-        // //     return data
-        // //     //this.$router.push('')
-        // // },
-        // // list_springboottutorial(){
-        // //     vehicleService.list().then(response => {console.log(response.data)})
-        // //     this.list_sbt = vehicleService.list()
-        // // },
-        // list_veiculoss(){
-        //     //Possivelmente a que chegou mais perto! Se ativar a linha abaixo, dá os erros em vehicleService.js
-        //     //console.log(vehicleService.list().then(response => {this.veiculoss = response.data}))
-        // },
         
+    },
+    mounted(){
+        // Mounted é uma função para efetuar a execução automática sem que o usuário precise efetuar qlqr ação. Ele roda ao carregar a página.
+        this.getVehicles();
     },
     created() {
         //this.list_springboottutorial();
@@ -239,10 +278,11 @@ export default {
     },
     computed: {
         carsProducts(){
-            // Retorna os carros adicionados:
-            // return this.products
             // Retorna os carros pelo filtro de busca (fórmula padrão de filtragem):
             return this.products.filter(car => car.name.toLowerCase().indexOf(this.searchKey.toLowerCase()) !== -1)
+        },
+        vehiclesListFiltered(){
+            return this.vehicles_list.filter(car => car.name.toLowerCase().indexOf(this.searchKey.toLowerCase()) !== -1)
         }
     },
     name: 'Listagem',
@@ -251,10 +291,6 @@ export default {
 </script>
 
 <style>
-
-    .form-group {
-        max-width: 500px;
-    }
 
     .padding {
         padding: 25px 0;

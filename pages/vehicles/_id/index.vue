@@ -10,7 +10,7 @@
     <section class="text-center">
         <h2>Edição de veículo</h2>
         <!-- Forms no submit chama o método updateCar, que chama o mutation-->
-        <form v-on:submit.prevent="updateCar">
+        <form v-on:submit.prevent="update_vehicle">
             <!-- Chama o component Formulario.vue, com passagem de valor props car_aux recebendo o objeto do veículo clonado -->
             <Forms :caraux="vehicle"></Forms>
             <button type="submit" class="btn btn-primary">Salvar</button> <!-- Submit, aciona o v-on acima -->
@@ -23,6 +23,7 @@
     // Ver melhor tudo sobre esse script.
 
 import Forms from '~/components/Formulario.vue'
+import vehicleService from '@/services/vehicleService'
 
 export default {
     components: { 
@@ -33,14 +34,72 @@ export default {
         return {
             // É feito internamente um find do produto de mesmo id em cima de lista completa deles,
             // Ao encontrar, é feito um stringify para transfomar a string em JSON, por último o parse para separar os dados.
-            "vehicle": JSON.parse(JSON.stringify(this.$store.state.products.find(car => car.id === this.$route.params.id)))
+            //"vehicle": JSON.parse(JSON.stringify(this.$store.state.products.find(car => car.id === this.$route.params.id))),
+            
+            //Tentando com backend:
+            //"vehicle": vehicleService.listById(this.$route.params.id) // tá puxando mas como aplicar eles ali? O response tá ok, mas não consigo jogar com objeto para edit.
+            
+            errors: [],
+            "vehicle": {
+                id: this.$route.params.id,
+                name: '',
+                description: '',
+                brand: '',
+                quantity: null,
+                color: '',
+                year: null,
+                license_plate: '',
+                type: '',
+                insurance: null,
+                fipe: null,
+                photo: '',
+            },
+            alert: {
+                isOpen: false,
+                msg: ""
+            },
+            
         };
     },
+    
     methods: {
         updateCar (e) {
             this.$store.commit('UPDATE_CAR', this.vehicle) // Commit na mutation responsável o objeto atual.
             this.$router.push('/listing') // Volta página ao menu de listagem
-        }
+        },
+        update_vehicle(){
+          vehicleService.update(this.vehicle.id, this.vehicle)
+          this.$router.push('/listing')
+        },
+        editVehicle(){
+            vehicleService.update(this.vehicle.id, this.vehicle).then(
+                response => {
+                    this.alert.isOpen= true;
+                    this.alert.msg="Alteração efetuada com sucesso!";
+                },
+                error => {
+                    this.alert.isOpen= true;
+                    this.alert.msg="Não foi possível alterar o veículo!";
+                }
+            );
+            this.$router.push('/listing');
+        },
+        init(){
+            vehicleService.listById(this.$route.params.id).then(response => {
+                this.vehicle = response.data
+            });
+        },
+        beforeRouteUpdate(){
+            // Para quando rota muda e quero fazer algo antes de qualquer ação:
+            // No caso a ideia seria carregar os dados do veículo atual antes
+            vehicleService.listById(to.params.id).then(response => {
+                this.vehicle = response.body
+            });
+            next();
+        },
+    },
+    mounted(){
+        this.init();
     }
 }
 </script>
