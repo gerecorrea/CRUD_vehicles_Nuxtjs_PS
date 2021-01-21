@@ -109,7 +109,8 @@
             available_total: Array.from(Array(101).keys()),
             max_description: [obj => obj.length <= 50 || "Descrição máxima de 50 caracteres"],
             max_license: [obj => obj.length == 7 || "Uma placa tem 7 dígitos "],
-            max_general: [obj => obj.length <= 25 || "Limite de 25 caracteres"]
+            max_general: [obj => obj.length <= 50 || "Limite de 50 caracteres"],
+            max_photo: [obj => obj.length <= 200 || "Limite de 200 caracteres"]
         }
     }
   }

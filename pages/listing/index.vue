@@ -8,11 +8,19 @@
 
         </div>
 
+        <!-- Força atualização de veículos -->
+        <div class="container">
+            <button @click="getVehicles" id="edit-button" title="Edit" class="btn btn-warning btn-sm" role="button">
+                <span class="glyphicon glyphicon-th-list"></span>    
+                Atualizar listagem
+            </button>
+        </div>
+
         <!-- Para busca e adição de novo carro: -->
         <div class="padding" >
             <v-row>
                 <v-col cols="12" sm="9">
-                    <input v-model="searchKey" class="form-control" id="search-element" placeholder="Buscar carro por nome" required/>
+                    <input v-model="searchKey" class="form-control" id="search-element" placeholder="Buscar veículo por nome" required/>
                 </v-col>
 
                 <v-col cols="12" sm="3">
@@ -21,11 +29,42 @@
                         Cadastrar novo veículo
                     </nuxt-link>
                 </v-col>
+
+                
             </v-row>
         </div>
 
-        <!-- Table real e final que será utilizado, com vehicles_list puxando do backend: -->
-        <table class="table" border="1">
+        <!-- Listagem oficial, usando vue-good-table: -->
+        <div>
+            <vue-good-table
+            :columns="columns"
+            :rows="vehiclesListFiltered"
+            styleClass="vgt-table striped"
+            theme="black-rhino">
+                <template slot="table-row" slot-scope="props">
+                    <!-- Obs: para verificar qual o campo e fazer caso especial: colum.field. 
+                                Para acessar determinado campo: row.nomeCampo -->
+                    <span v-if="props.column.field == 'actions'">
+                        <!-- Caso o campo seja actions, quero mostrar os botões de ação: -->
+                        <button @click="editVehicle(props.row.id)" id="edit-button" title="Edit" class="btn btn-warning btn-sm" role="button">Editar</button>
+                        <MoreDialog2 v-bind:car="props.row" class="btn btn-primary btn-xs" />
+                        <button @click="deleteVehicle(props.row.id) " id="delete-button" title="Delete" class="btn btn-danger btn-sm" role="button">Excluir</button>
+                    </span>
+                    <span v-else-if="props.column.field == 'photo'">
+                        <!-- Caso o campo seja foto, queremos mostrar uma imagem, não string: -->
+                        <img :src="props.row.photo" alt style="width:45px;height:35px;"> 
+                    </span>
+                    <span v-else>
+                        <!-- Demonstração normal do atributo: -->
+                        <!-- {{props.formattedRow[props.column.field]}}  -->
+                        {{props.row.field}}
+                    </span>
+                </template>
+            </vue-good-table>
+        </div>
+
+        <!-- Outra possibilidade de listagem FUNCIONAL, usando v-for, tabela minha mesmo feita, sem vue-good-table: -->
+        <!-- <table class="table" border="1">
             <thead>
             <tr>
                 <th><center>Nome</center></th>
@@ -38,8 +77,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="car in vehicles_list" :key="car.id">
-                <!-- Aqui poderia ser car in products, porém como quero aplicação de filtro itero sobre o computed carsProducts -->
+            <tr v-for="car in vehiclesListFiltered" :key="car.id">
                 <td> {{car.name}} </td>
                 <td> {{car.description}} </td>
                 <td> {{car.brand}} </td>
@@ -47,111 +85,18 @@
                 <td> {{car.quantity}} </td>
                 <td>
                     <div>
-                        <!-- Editar - FUNFANDO: -->
-                        <nuxt-link class="btn btn-warning btn-sm" :to="{name: 'vehicles-id', params: {id: car.id}}">Editar</nuxt-link>
-
-                        <!-- Novo botão de edit, vendo se assim fica melhor - FUNFANDO-->
-                        <!-- <button id="action-button" title="Edit" class="btn btn-warning btn-xs" role="button" @click="editVehicle(car.id)">Editar2</button> -->
-                        
-                        <!-- Botão INFO - v-dialog v-bind:(props que recebe (car) = "objeto lançado daqui (car)"): -->
+                        <button @click="editVehicle(car.id)" id="edit-button" title="Edit" class="btn btn-warning btn-sm" role="button">Editar</button>                
                         <MoreDialog2 v-bind:car="car" class="btn btn-primary btn-xs" />
-
-                        <!-- Botão de delete - somente teste ainda -->
-                        <button @click="delete_vehicle_without_service(car.id) " id="action-button" title="Delete" class="btn btn-danger btn-sm" role="button">Excluir</button>
+                        <button @click="deleteVehicle(car.id) " id="delete-button" title="Delete" class="btn btn-danger btn-sm" role="button">Excluir</button>
                     </div>
                 </td>
                 <td>
-                    <!-- <img src="~/assets/corsa-2003.jpg" style="width:25px;height:25px;"> -->
-                    <!-- uso de imagem com v-bind implicito para interpolar atributos-->
-                    <img :src="car.photo" alt style="width:30px;height:30px;"> 
+                    <img :src="car.photo" alt style="width:65px;height:45px;"> 
                 </td>
             </tr>
             </tbody>
-        </table>
+        </table> -->
 
-        <!-- AS DUAS TABELAS ABAIXO SÃO APENAS PARA TESTE/PODEM SER ÚTEIS -->
-
-        <!-- Aqui uma imeplmentação via uso de tabelas normais de html, usando componentes v-for para iteração,
-        assim como outros para navegação e envios de dados. Está tudo certo. -->
-        <table class="table" border="1">
-            <thead>
-            <tr>
-                <th><center>ID</center></th>
-                <th><center>Nome</center></th>
-                <th><center>Descrição</center></th>
-                <th><center>Marca</center></th>
-                <th><center>Quantidade</center></th>
-                <th><center>Ações</center></th> <!--class="col-sm-2" -->
-                <th><center>Foto</center></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="car in carsProducts" :key="car.id">
-                <!-- Aqui poderia ser car in products, porém como quero aplicação de filtro itero sobre o computed carsProducts -->
-                <td> {{car.id}} </td>
-                <td> {{car.name}} </td>
-                <td> {{car.description}} </td>
-                <td> {{car.brand}} </td>
-                <td> {{car.quantity}} </td>
-                <td>
-                    <div>
-                        <!-- Editar: -->
-                        <!-- <nuxt-link class="btn btn-warning btn-xs" :to="{name: 'alteration-id-edit', params: {id: car.id}}">Editar</nuxt-link> -->
-                        <nuxt-link class="btn btn-warning btn-xs" :to="{name: 'vehicles-id', params: {id: car.id}}">Editar</nuxt-link>
-                        <!-- Botão INFO - v-dialog v-bind:(props que recebe (car) = "objeto lançado daqui (car)"): -->
-                        <MoreDialog2 v-bind:car="car" class="btn btn-primary btn-xs" />
-                    </div>
-                </td>
-                <td>
-                    <!-- <img src="~/assets/corsa-2003.jpg" style="width:25px;height:25px;"> -->
-                    <!-- uso de imagem com v-bind implicito para interpolar atributos-->
-                    <img :src="car.photo" alt style="width:30px;height:30px;"> 
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
-        <!-- Abaixo a listagem via vue-good-table, uma tentativa de implementação. Os botões de navegação não estão chegando aos alvos: -->
-        <div>
-            <vue-good-table
-            :columns="columns"
-            :rows="carsProducts"
-            styleClass="vgt-table striped"
-            theme="default">
-                <!-- Aqui poderia ser car in products, porém como quero aplicação de filtro itero sobre o computed carsProducts -->
-                <template slot="table-row" slot-scope="props">
-                    <span v-if="props.column.field == 'actions'">
-                        <!-- Caso o campo seja actions, quero mostrar os botões de ação: -->
-                        <nuxt-link class="btn btn-warning btn-xs" :to="{name: 'vehicles-id', params: {id: props.column.id}}">Editar</nuxt-link>
-                        <MoreDialog2 v-bind:car="products" class="btn btn-primary btn-xs" />
-                    </span>
-                    <span v-else-if="props.column.field == 'photo'">
-                        <!-- Caso o campo seja foto, queremos mostrar uma imagem, não string: -->
-                        <img :src="props.column.photo" alt style="width:45px;height:35px;"> 
-                    </span>
-                    <span v-else>
-                        <!-- Demonstração normal do atributo: -->
-                        {{props.formattedRow[props.column.field]}} 
-                    </span>
-                    
-
-                </template>
-            </vue-good-table>
-        </div>
-
-        <!-- ################# Parte da ligação com backend - Still not working: ############## -->
-
-        <!-- <div>
-            <button v-on:click="list_all" class="btn btn-primary btn-xs">Lista normal</button>
-            <button v-on:click="list_all_service" class="btn btn-primary btn-xs">Lista pelo service</button>
-             <button v-on:click="list_moreonetry" class="btn btn-primary btn-xs">Lista pelo service Listagem4</button> -->
-            <!-- <button v-on:click="list_springboottutorial" class="btn btn-primary btn-xs">Lista pelo service Listagem5</button> -->
-            <!--
-            <h4>Listagem: {{list_data}}</h4>
-            <h4>Listagem2: {{list_test}}</h4>
-            <h4>Listagem3: {{data_anothertry}}</h4>
-            <h4> Listagem5 - {{list_sbt}} </h4>
-        </div> -->
         
 
 
@@ -186,11 +131,6 @@ export default {
             vehicles_list: [],
             columns: [
                 {
-                label: 'ID',
-                field: 'id',
-                type: 'number',
-                },
-                {
                 label: 'Nome',
                 field: 'name',
                 },
@@ -201,6 +141,10 @@ export default {
                 {
                 label: 'Marca',
                 field: 'brand',
+                },
+                {
+                label: 'Tipo',
+                field: 'type',
                 },
                 {
                 label: 'Quantidade',
@@ -240,26 +184,17 @@ export default {
 
         editVehicle(id){
             // Apenas enviando o id para pagina de edição
-            // No momento não estou usando, pois a outa está sendo mais efetiva.
             this.$router.push('/vehicles/' + id)
         },
 
         deleteVehicle(id){
-            //Teste do delete, tá retornando 405 - método não permitido
-            vehicleService.delete(id);
-            this.$router.push('/listing')
-        },
-        delete_vehicle_without_service(id){
-            // Taambém funcionando sem o service!
-            this.$axios.$delete('vehicles/' + id)
+            //Teste do delete, 
+            vehicleService.delete(id); //tá retornando 405 - método não permitido
+            //this.$axios.$delete('vehicles/' + id) // assim funfa.
+            getVehicles();
+            this.$router.push('/');
             this.$router.push('/listing');
-            this.getVehicles();
-        },
-
-
-        teste(){
-            console.log("I'm here");
-            vehicleService.list();
+            //vm.$forceUpdate();
         }
         // async list_anothertry(){
         //     let data_anothertry = (await $axios.get(backendHost+'/vehicles')).data
@@ -269,11 +204,6 @@ export default {
     mounted(){
         // Mounted é uma função para efetuar a execução automática sem que o usuário precise efetuar qlqr ação. Ele roda ao carregar a página.
         this.getVehicles();
-    },
-    created() {
-        //this.list_springboottutorial();
-        //this.list_anothertest();
-        //this.list_veiculoss();
     },
     computed: {
         carsProducts(){

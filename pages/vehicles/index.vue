@@ -8,7 +8,7 @@
         <!-- <img src="~/assets/car.png" style="width:250px;height:250px;"> -->
         <h1 class=""> Cadastro de veículo</h1>
         <!-- Forms no submit chama o método updateCar, que chama o mutation-->
-        <form v-on:submit.prevent="create_vehicle_without_service">
+        <form v-on:submit.prevent="createVehicle">
             <!-- Chama o component Formulario.vue, com passagem de valor props car_aux recebendo o objeto do veículo clonado -->
             <Forms :caraux="vehicle"></Forms>
             <button type="submit" class="btn btn-primary">Cadastrar</button><!-- Submit, aciona o v-on acima -->
@@ -55,11 +55,16 @@ export default {
       }
   },
   methods:{
-        create_vehicle(){
+        createVehicle(){
+          this.$axios.post('vehicles', this.vehicle);
+          //vehicleService.create(this.vehicle);
+          this.$router.push('/listing');
+          
+          
           // A resp é para limpar os dados!
-          vehicleService.create(this.vehicle).then(resp => {
+          //vehicleService.create(this.vehicle).then(resp => {
             //this.vehicle = resp.data;
-            this.$router.push('/listing');
+            
             //this.vehicle.name = ''
             // this.vehicle.description = ''
             // this.vehicle.brand= ''
@@ -71,15 +76,10 @@ export default {
             // this.vehicle.insurance= null
             // this.vehicle.fipe= null
             // this.vehicle.photo= ''
-          })
+          //});
         },
         async create_vehicle_async(){
           await vehicleService.create(this.vehicle)
-        },
-        create_vehicle_without_service(){
-          // Eita, assim tá funcionando
-          this.$axios.$post('vehicles', this.vehicle);
-          this.$router.push('/listing');
         }
   }
 }
