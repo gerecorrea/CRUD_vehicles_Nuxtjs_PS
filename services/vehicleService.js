@@ -1,23 +1,23 @@
 let vehicle
 
-export default{
+export default {
     setVehicle: (newVehicle) => {
         vehicle = newVehicle;
     },
     list: () => {
-        return vehicle.get('vehicles')
+        return vehicle.get('vehicles'); 
     },
     listById: (uuid) => {
-        return vehicle.get('vehicles/' + uuid)
+        return vehicle.get('vehicles/' + uuid);
     },
-    create:(vehicle) => {
-        return vehicle.post('vehicles', vehicle)
+    create: (vehicle_object) => {
+        return vehicle.post('vehicles', vehicle_object); 
     },
-    update:(uuid, vehicle) => {
-        return vehicle.put('vehicles/' + uuid, vehicle)
+    update: (uuid, vehicle_object) => {
+        return vehicle.put('vehicles/' + uuid, vehicle_object);
     },
-    delete:(uuid) => {
-        return vehicle.delete('vehicles/' + uuid)
+    delete: (uuid) => {
+        return vehicle.delete('vehicles/' + uuid);
     }
     // Obs: possivelmente '$' antes dos métodos diferente de get (este é o padrão) . verificar amanhã
 }

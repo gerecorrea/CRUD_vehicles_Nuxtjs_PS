@@ -44,18 +44,14 @@ export default {
                 isOpen: false,
                 msg: ""
             }
-
-            // PARA STORE COM DADOS ESTÁTICOS: É feito internamente um find do produto de mesmo id em cima de lista completa deles,
-            // Ao encontrar, é feito um stringify para transfomar a string em JSON, por último o parse para separar os dados.
-            //"vehicle": JSON.parse(JSON.stringify(this.$store.state.products.find(car => car.id === this.$route.params.id))),
         };
     },
     
     methods: {
         updateVehicle(){
-          //vehicleService.update(this.vehicle.id, this.vehicle)
-          this.$axios.put('vehicles/'+ this.vehicle.id, this.vehicle); // assim funfando
-          this.$router.push('/listing')
+          vehicleService.update(this.vehicle.id, this.vehicle);
+          //this.$axios.put('vehicles/'+ this.vehicle.id, this.vehicle); // Formato sem service
+          this.$router.push('/listing');
         },
         editVehicle(){
             //Tentativa com tratativa de erros. Ainda não utilizada

@@ -127,7 +127,6 @@ export default {
     data() {
         // Dados instanciados inicialmente para uso:
         return{
-            products: this.$store.state.products, 
             searchKey: '',
             //vehicles_list: this.$store.state.car_list,
             vehicles_list: [],
@@ -162,12 +161,6 @@ export default {
                 field: 'photo',
                 },
             ],
-            rows: [
-                {id: 1, name: 'Corsa', description: 'Motor 1.0, hatch, pequeno, consumo médio', brand: 'Chevrolet', quantity: 2, license_plate: "MHE5467", year: 2003, type: "Carro", color: "Preto", fipe: 5980, insurance: 344, photo: '/assets/corsa-2003.jpg'},
-                {id: 2, name: 'Polo', description: 'Motor 1.6, sedan, grande, confortline, bom para viagens', brand: 'Volkswagen', quantity: 3, license_plate: "MHE5467", year: 2003, type: "Carro", color: "Preto", fipe: 5980, insurance: 344, photo: '/assets/car.png'},
-                {id: 3, name: 'Uno', description: 'Motor 1.0, hatch, pequeno e econômico', brand: 'Fiat', quantity: 6, license_plate: "MHE5467", year: 2003, type: "Carro", color: "Preto", fipe: 5980, insurance: 344, photo: '/assets/car.png'},
-                {id: 4, name: 'Charger R/T', description: 'Motor 3.4, potência, alto consumo, baixo conforto, estilo', brand: 'Dodge', quantity: 1, license_plate: "MHE5467", year: 2003, type: "Carro", color: "Preto", fipe: 5980, insurance: 344, photo: '/assets/car.png'}
-            ],
         }
     },
     methods: {
@@ -191,27 +184,19 @@ export default {
 
         deleteVehicle(id){
             //Teste do delete, 
-            vehicleService.delete(id); //tá retornando 405 - método não permitido
-            //this.$axios.$delete('vehicles/' + id) // assim funfa.
-            getVehicles();
-            this.$router.push('/');
+            vehicleService.delete(id); //agora tá funfando!
+            //this.$axios.$delete('vehicles/' + id); // Formato sem service
+            //this.getVehicles();
+            //this.$router.push('/');
             this.$router.push('/listing');
             //vm.$forceUpdate();
-        }
-        // async list_anothertry(){
-        //     let data_anothertry = (await $axios.get(backendHost+'/vehicles')).data
-        //     this.data_anothertry = data_anothertry
-        
+        }      
     },
     mounted(){
         // Mounted é uma função para efetuar a execução automática sem que o usuário precise efetuar qlqr ação. Ele roda ao carregar a página.
         this.getVehicles();
     },
     computed: {
-        carsProducts(){
-            // Retorna os carros pelo filtro de busca (fórmula padrão de filtragem):
-            return this.products.filter(car => car.name.toLowerCase().indexOf(this.searchKey.toLowerCase()) !== -1)
-        },
         vehiclesListFiltered(){
             return this.vehicles_list.filter(car => car.name.toLowerCase().indexOf(this.searchKey.toLowerCase()) !== -1)
         }

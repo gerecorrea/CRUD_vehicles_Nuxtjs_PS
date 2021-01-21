@@ -39,26 +39,13 @@ export default {
   data(){
       return{
         vehicle: {name: '', description: '', brand: '', quantity: null, license_plate: '', year: null, type: '', color: '', fipe: null, insurance: null, photo: ''},
-        // vehicle:{
-        //   name: '',
-        //   description: '',
-        //   brand: '',
-        //   quantity: null,
-        //   color: '',
-        //   year: null,
-        //   license_plate: '',
-        //   type: '',
-        //   insurance: null,
-        //   fipe: null,
-        //   photo: '',
-        // }
       }
   },
   methods:{
         createVehicle(){
-          this.$axios.post('vehicles', this.vehicle);
-          //vehicleService.create(this.vehicle);
-          this.$router.push('/listing');
+          vehicleService.create(this.vehicle);
+          //this.$axios.post('vehicles', this.vehicle); // Formato sem service
+          //this.$router.push('/listing');
           
           
           // A resp é para limpar os dados!

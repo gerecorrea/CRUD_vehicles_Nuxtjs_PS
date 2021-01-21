@@ -87,7 +87,7 @@
 
                     <v-col cols="12" sm="12">
                         <div class="form-group">
-                            <center><img :src="car.photo" alt style="width:300px;height:300px;"> </center>
+                            <center><img :src="car.photo" alt style="width:450px;height:330px;"> </center>
                         </div>
                     </v-col>
                 </v-row>
