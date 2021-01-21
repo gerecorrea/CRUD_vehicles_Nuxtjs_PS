@@ -42,8 +42,11 @@
             styleClass="vgt-table striped"
             theme="black-rhino">
                 <template slot="table-row" slot-scope="props">
-                    <!-- Obs: para verificar qual o campo e fazer caso especial: colum.field. 
-                                Para acessar determinado campo: row.nomeCampo -->
+                    <!-- Obs - reparei (pode estar errado): 
+                                Para verificar qual o campo e fazer caso especial: colum.field. 
+                                Para acessar determinado campo em envio (botão etc) ou algo especial: row.nomeCampo 
+                                Para printar campo na tabela formatado: props.formattedRow[props.columns.field]            
+                    -->
                     <span v-if="props.column.field == 'actions'">
                         <!-- Caso o campo seja actions, quero mostrar os botões de ação: -->
                         <button @click="editVehicle(props.row.id)" id="edit-button" title="Edit" class="btn btn-warning btn-sm" role="button">Editar</button>
@@ -56,8 +59,7 @@
                     </span>
                     <span v-else>
                         <!-- Demonstração normal do atributo: -->
-                        <!-- {{props.formattedRow[props.column.field]}}  -->
-                        {{props.row.field}}
+                        {{props.formattedRow[props.column.field]}}
                     </span>
                 </template>
             </vue-good-table>

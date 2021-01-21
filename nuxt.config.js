@@ -12,7 +12,7 @@ switch(applicationProfile){
         backendHost = "http://localhost:8080"
         break
     case 'heroku':
-        backendHost = "https://crud-ps-rental-vehic-backend.herokuapp.com/"
+        backendHost = "https://crud-ps-rental-vehic-backend.herokuapp.com"
         break
 }
 
