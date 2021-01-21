@@ -3,17 +3,17 @@
 import colors from 'vuetify/es5/util/colors'
 
 //Realização da configuração básico das url do axios.
-let backendHost = ''
+let backendHost = '';
 
-const applicationProfile = process.env.NODE_ENV
+const applicationProfile = process.env.NODE_ENV;
 
 switch(applicationProfile){
     case 'development':
-        backendHost = "http://localhost:8080"
-        break
+        backendHost = "http://localhost:8080";
+        break;
     case 'heroku':
-        backendHost = "https://crud-ps-rental-vehic-backend.herokuapp.com"
-        break
+        backendHost = "https://crud-ps-rental-vehic-backend.herokuapp.com/";
+        break;
 }
 
 export default {

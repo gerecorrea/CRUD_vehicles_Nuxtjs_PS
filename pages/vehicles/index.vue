@@ -5,7 +5,6 @@
   <div>
     <div class="container">
       <div class="text-center">
-        <!-- <img src="~/assets/car.png" style="width:250px;height:250px;"> -->
         <h1 class=""> Cadastro de veículo</h1>
         <!-- Forms no submit chama o método updateCar, que chama o mutation-->
         <form v-on:submit.prevent="createVehicle">
@@ -15,8 +14,6 @@
             <!-- <ConfirmButton type="submit" class="btn btn-primary">CadastrarDialog</ConfirmButton>  -->
             <nuxt-link to="/home" class="btn btn-danger">Cancelar</nuxt-link> <!-- Volta à listagem, sem alteração -->
         </form>
-
-        <!-- abaixo inserir todo o menu de cadastro -->
       </div>
     </div>
   </div>
@@ -25,7 +22,6 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-//import VuetifyLogo from '~/components/VuetifyLogo.vue'
 import Forms from '~/components/Formulario.vue'
 import ConfirmButton from '~/components/ConfirmButton.vue'
 import vehicleService from '@/services/vehicleService'

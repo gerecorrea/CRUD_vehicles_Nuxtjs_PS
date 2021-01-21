@@ -19,5 +19,4 @@ export default {
     delete: (uuid) => {
         return vehicle.delete('vehicles/' + uuid);
     }
-    // Obs: possivelmente '$' antes dos métodos diferente de get (este é o padrão) . verificar amanhã
 }
