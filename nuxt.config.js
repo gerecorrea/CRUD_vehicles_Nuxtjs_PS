@@ -6,13 +6,13 @@ import colors from 'vuetify/es5/util/colors'
 let backendHost = '';
 
 const applicationProfile = process.env.NODE_ENV;
-console.log(process.env.NODE_ENV)
 
 switch(applicationProfile){
     case 'development':
         backendHost = "http://localhost:8080";
         break;
-    case 'heroku':
+    case 'production':
+        // Heroku identify as "production" not "heroku"
         backendHost = "https://crud-ps-rental-vehic-backend.herokuapp.com/";
         break;
 }
