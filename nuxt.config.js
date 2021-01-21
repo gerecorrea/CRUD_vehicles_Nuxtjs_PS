@@ -6,6 +6,7 @@ import colors from 'vuetify/es5/util/colors'
 let backendHost = '';
 
 const applicationProfile = process.env.NODE_ENV;
+console.log(process.env.NODE_ENV)
 
 switch(applicationProfile){
     case 'development':
@@ -85,9 +86,6 @@ export default {
   axios: {
     //baseURL: 'http://localhost:3000'
     baseURL: backendHost,
-    // headers:{
-    //   'Access-Control-Allow-Origin': '*',
-    // }
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
