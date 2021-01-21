@@ -15,6 +15,12 @@ switch(applicationProfile){
         // Heroku identify as "production" not "heroku"
         backendHost = "https://crud-ps-rental-vehic-backend.herokuapp.com/";
         break;
+    case 'heroku':
+        backendHost = "https://crud-ps-rental-vehic-backend.herokuapp.com/";
+        break;
+    case 'homolog':
+        backendHost = "https://crud-ps-rental-vehic-backend.herokuapp.com/";
+        break;
 }
 
 export default {
