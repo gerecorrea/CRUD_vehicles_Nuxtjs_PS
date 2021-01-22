@@ -26,13 +26,11 @@
 </template>
 
 <script>
-import Logo from "~/components/Logo.vue";
 import Forms from "~/components/Formulario.vue";
 import vehicleService from "@/services/vehicleService";
 
 export default {
     components: {
-        Logo,
         Forms,
     },
     data() {

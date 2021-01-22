@@ -46,7 +46,7 @@
     <v-main>
       <v-container class="text-center">
         <!-- Images from flaticon.com -->
-        <img src="~/assets/chopper.png" style="width: 150px; height: 150px" />
+        <img src="~/assets/chopper.png" style="width: 250px; height: 250px" />
         <nuxt /> <!-- Isso implica que o conteúdo das páginas/componentes que usam esse layout default.vue entram aqui-->
       </v-container>
     </v-main>

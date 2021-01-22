@@ -91,7 +91,6 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
 import MoreInformation from '~/components/MoreInformation.vue'
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table';
@@ -99,7 +98,6 @@ import vehicleService from '@/services/vehicleService' // Service para backend
 
 export default {
     components: {
-        Logo,
         MoreInformation,
         VueGoodTable
     },
