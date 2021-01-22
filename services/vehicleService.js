@@ -2,6 +2,7 @@ let vehicle
 
 export default {
     setVehicle: (newVehicle) => {
+        // Usa-se por padrão "client"
         vehicle = newVehicle;
     },
     list: () => {

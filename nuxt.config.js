@@ -12,7 +12,6 @@ switch(applicationProfile){
         backendHost = "http://localhost:8080";
         break;
     case 'production':
-        // Heroku identify as "production" not "heroku"
         backendHost = "https://crud-ps-rental-vehic-backend.herokuapp.com/";
         break;
     case 'heroku':

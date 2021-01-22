@@ -56,7 +56,7 @@
       :absolute="!fixed"
       app
     >
-      <span>&copy; {{ new Date().getFullYear() }} - Geremias Corrêa - Com uso do template Vuetify.js</span>
+      <span>&copy; {{ new Date().getFullYear() }} - Geremias Corrêa</span>
     </v-footer>
   </v-app>
 </template>
@@ -79,11 +79,6 @@ export default {
           title: 'Cadastro de veículo',
           to: '/vehicles'
         },
-        // {
-        //   icon: 'mdi-account-edit',
-        //   title: 'Alteração de veículo',
-        //   to: '/alteration'
-        // },
         {
           icon: 'mdi-format-align-justify',
           title: 'Listagem de veículos',

@@ -1,17 +1,33 @@
 
 
 <template>
-    <!-- Tela de edit. -->
-
+    <!-- Tela de edição: -->
     <section class="text-center">
         <h2>Edição de veículo</h2>
-        <!-- Forms no submit chama o método updateVehicle, que chama o backend-->
         <form v-on:submit.prevent="updateVehicle">
             <!-- Chama o component Formulario.vue, com passagem de valor props car_aux recebendo o objeto do veículo clonado -->
             <Forms :caraux="vehicle"></Forms>
             <button type="submit" class="btn btn-primary">Salvar</button> <!-- Submit, aciona o v-on acima -->
             <nuxt-link to="/listing" class="btn btn-danger">Cancelar</nuxt-link> <!-- Volta à listagem, sem alteração -->
         </form>
+
+        <v-snackbar
+            v-model="snackbar"
+            bottom
+            left
+            :color="typeAlert"
+            :timeout="4000"
+            >
+            <b>{{msgAlert}}</b>
+            <v-btn
+                color="black"
+                text
+                @click="redirect"
+            >
+                Voltar à listagem
+            </v-btn>
+        </v-snackbar>
+
     </section>
 </template>
 
@@ -40,31 +56,35 @@ export default {
                 fipe: null,
                 photo: '',
             },
-            alert: {
-                isOpen: false,
-                msg: ""
-            }
+            snackbar: false,
+            msgAlert: '',
+            typeAlert: '',
+            titleAlert: ''
         };
     },
     
     methods: {
         updateVehicle(){
-          vehicleService.update(this.vehicle.id, this.vehicle);
           //this.$axios.put('vehicles/'+ this.vehicle.id, this.vehicle); // Formato sem service
-          this.$router.push('/listing');
-        },
-        editVehicle(){
-            //Tentativa com tratativa de erros. Ainda não utilizada
             vehicleService.update(this.vehicle.id, this.vehicle).then(
-                response => {
-                    this.alert.isOpen= true;
-                    this.alert.msg="Alteração efetuada com sucesso!";
-                },
-                error => {
-                    this.alert.isOpen= true;
-                    this.alert.msg="Não foi possível alterar o veículo!";
+                () => {
+                    this.alert("Veículo editado com sucesso!", "success");
                 }
-            );
+            ).catch(e => {
+                let msg = "Ocorreu algum erro inesperado.";
+                if (e.response && e.response.status === 400){
+                    msg = e.response.data.message;
+                }
+                this.alert(msg, "error");
+            });
+            //this.$router.push('/listing');
+        },
+        alert(msg, type){
+            this.msgAlert = msg;
+            this.typeAlert = type;
+            this.snackbar = true;
+        }, 
+        redirect(){
             this.$router.push('/listing');
         },
         init(){
@@ -75,7 +95,7 @@ export default {
     },
     mounted(){
         this.init();
+    },
     }
-}
 </script>
 
