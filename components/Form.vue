@@ -48,13 +48,13 @@
 
             <v-col cols="12" sm="4">
                 <div class="form-group">
-                    <v-text-field v-model="caraux.insurance" color="pink lighten-2" label="Valor do seguro" required></v-text-field>
+                    <v-text-field v-model="caraux.insurance" :rules="is_number" color="pink lighten-2" label="Valor do seguro" required></v-text-field>
                 </div>
             </v-col>
 
             <v-col cols="12" sm="4">
                 <div class="form-group">
-                    <v-text-field v-model="caraux.fipe" color="pink lighten-2" label="Valor da tabela FIPE" required></v-text-field>
+                    <v-text-field v-model="caraux.fipe" :rules="is_number" color="pink lighten-2" label="Valor da tabela FIPE" required></v-text-field>
                 </div>
             </v-col>
 
@@ -110,7 +110,8 @@
                 max_description: [obj => obj.length <= 50 || "Descrição máxima de 50 caracteres"],
                 max_license: [obj => obj.length == 7 || "Uma placa tem 7 dígitos "],
                 max_general: [obj => obj.length <= 50 || "Limite de 50 caracteres"],
-                max_photo: [obj => obj.length <= 300 || "Limite de 300 caracteres"]
+                max_photo: [obj => obj.length <= 300 || "Limite de 300 caracteres"],
+                is_number: [obj => !isNaN(obj) ? true  : "Campo somente numérico"]
             }
         }
     }

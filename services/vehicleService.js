@@ -11,11 +11,11 @@ export default {
     listById: (uuid) => {
         return vehicle.get('vehicles/' + uuid);
     },
-    create: (vehicle_object) => {
-        return vehicle.post('vehicles', vehicle_object); 
+    create: (vehicleObject) => {
+        return vehicle.post('vehicles', vehicleObject); 
     },
-    update: (uuid, vehicle_object) => {
-        return vehicle.put('vehicles/' + uuid, vehicle_object);
+    update: (uuid, vehicleObject) => {
+        return vehicle.put('vehicles/' + uuid, vehicleObject);
     },
     delete: (uuid) => {
         return vehicle.delete('vehicles/' + uuid);

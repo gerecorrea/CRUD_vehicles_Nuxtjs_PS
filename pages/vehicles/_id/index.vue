@@ -13,10 +13,11 @@
 
         <v-snackbar
             v-model="snackbar"
-            bottom
-            left
+            absolute
+            center
+            outlined
             :color="typeAlert"
-            :timeout="4000"
+            :timeout="3000"
             >
             <b>{{msgAlert}}</b>
             <v-btn
@@ -24,7 +25,7 @@
                 text
                 @click="redirect"
             >
-                Voltar à listagem
+                <h6>Voltar à listagem</h6>
             </v-btn>
         </v-snackbar>
 
@@ -33,8 +34,8 @@
 
 <script>
 
-import Forms from '~/components/Formulario.vue'
-import vehicleService from '@/services/vehicleService'
+import Forms from '~/components/Form.vue'
+import VehicleService from '@/services/VehicleService'
 
 export default {
     components: { 
@@ -66,16 +67,12 @@ export default {
     methods: {
         updateVehicle(){
           //this.$axios.put('vehicles/'+ this.vehicle.id, this.vehicle); // Formato sem service
-            vehicleService.update(this.vehicle.id, this.vehicle).then(
+            VehicleService.update(this.vehicle.id, this.vehicle).then(
                 () => {
                     this.alert("Veículo editado com sucesso!", "success");
                 }
             ).catch(e => {
-                let msg = "Ocorreu algum erro inesperado.";
-                if (e.response && e.response.status === 400){
-                    msg = e.response.data.message;
-                }
-                this.alert(msg, "error");
+                this.alert("Ocorreu um erro na edição.", "error");
             });
             //this.$router.push('/listing');
         },
@@ -88,9 +85,14 @@ export default {
             this.$router.push('/listing');
         },
         init(){
-            vehicleService.listById(this.$route.params.id).then(response => {
-                this.vehicle = response.data
-            });
+            VehicleService.listById(this.$route.params.id)
+                .then(response => {
+                    this.vehicle = response.data
+                })
+                .catch((e) => {
+                    this.alert("Ocorreu um erro na listagem.", "error");
+                }
+            );
         }
     },
     mounted(){
@@ -98,4 +100,10 @@ export default {
     },
     }
 </script>
+
+<style scoped>
+h6{
+    color: white
+}
+</style>
 

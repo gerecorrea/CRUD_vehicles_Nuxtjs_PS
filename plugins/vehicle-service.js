@@ -1,6 +1,6 @@
-import vehicleService from '@/services/vehicleService'
+import VehicleService from '@/services/VehicleService'
 
 export default ({app}) => {
     // Usa-se por padrão "cliente"
-    vehicleService.setVehicle(app.$axios)
+    VehicleService.setVehicle(app.$axios)
 }

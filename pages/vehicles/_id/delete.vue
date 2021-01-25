@@ -10,10 +10,11 @@
 
         <v-snackbar
             v-model="snackbar"
-            bottom
-            left
+            absolute
+            center
+            outlined
             :color="typeAlert"
-            :timeout="4000"
+            :timeout="3000"
             >
             <b>{{msgAlert}}</b>
             <v-btn
@@ -21,7 +22,7 @@
                 text
                 @click="redirect"
             >
-                Voltar à listagem
+                <h6>Voltar à listagem</h6>
             </v-btn>
         </v-snackbar>
     </section>
@@ -29,7 +30,7 @@
 
 <script>
 
-import vehicleService from '@/services/vehicleService'
+import VehicleService from '@/services/VehicleService'
 
 export default {
     data () {
@@ -43,16 +44,12 @@ export default {
     },
     methods: {
         deleteVehicle() {
-            vehicleService.delete(this.$route.params.id).then(
+            VehicleService.delete(this.$route.params.id).then(
                 () => {
                     this.alert("Veículo excluído com sucesso!", "success");
                 }
             ).catch(e => {
-                let msg = "Ocorreu algum erro inesperado.";
-                if (e.response && e.response.status === 400){
-                    msg = e.response.data.message;
-                }
-                this.alert(msg, "error");
+                this.alert("Ocorreu um erro na exclusão.", "error");
             });
         },
         alert(msg, type){
@@ -66,3 +63,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+h6{
+    color: white;
+}
+</style>

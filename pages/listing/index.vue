@@ -86,7 +86,22 @@
             </tr>
             </tbody>
         </table> -->
+    
+    <v-snackbar
+            v-model="snackbar"
+            absolute
+            center
+            outlined
+            :color="typeAlert"
+            :timeout="3000"
+        >
+            <b>{{ msgAlert }}</b>
+            <v-btn color="black" text @click="snackbar = false"> <h6>X</h6> </v-btn>
+        </v-snackbar>
+    
     </div>
+
+    
 
 </template>
 
@@ -94,7 +109,7 @@
 import MoreInformation from '~/components/MoreInformation.vue'
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table';
-import vehicleService from '@/services/vehicleService' // Service para backend
+import VehicleService from '@/services/VehicleService' // Service para backend
 
 export default {
     components: {
@@ -107,42 +122,52 @@ export default {
             vehicles_list: [],
             columns: [
                 {
-                label: 'Nome',
-                field: 'name',
+                    label: 'Nome',
+                    field: 'name',
                 },
                 {
-                label: 'Descrição',
-                field: 'description',
+                    label: 'Descrição',
+                    field: 'description',
                 },
                 {
-                label: 'Marca',
-                field: 'brand',
+                    label: 'Marca',
+                    field: 'brand',
                 },
                 {
-                label: 'Tipo',
-                field: 'type',
+                    label: 'Tipo',
+                    field: 'type',
                 },
                 {
-                label: 'Quantidade',
-                field: 'quantity',
-                type: 'number',
+                    label: 'Quantidade',
+                    field: 'quantity',
+                    type: 'number',
                 },
                 {
-                label: 'Ações',
-                field: 'actions',
+                    label: 'Ações',
+                    field: 'actions',
                 },
                 {
-                label: 'Foto',
-                field: 'photo',
+                    label: 'Foto',
+                    field: 'photo',
                 },
             ],
+            snackbar: false,
+            msgAlert: "",
+            typeAlert: "",
+            titleAlert: "",
         }
     },
     methods: {
         getVehicles(){
-            vehicleService.list().then(res => {
-                this.vehicles_list = res.data
-            })
+            VehicleService.list()
+                .then(res => {
+                    this.vehicles_list = res.data
+                })
+                .catch((e) => {
+                    this.alert("Ocorreu um erro na listagem.", "error");
+                }
+            );
+            
         },
         editVehicle(id){
             // Redireciona para tela de edição apenas:
@@ -152,7 +177,12 @@ export default {
             // Redireciona para tela de delete apenas:
             this.$router.push('/vehicles/' + id + '/delete'); // Caso em vehicles/_id/delete.vue
             //this.$router.push('/delete/' + id); // Caso em vehicle/_id/index.vue
-        }      
+        },
+        alert(msg, type){
+            this.msgAlert = msg;
+            this.typeAlert = type;
+            this.snackbar = true;
+        },     
     },
     mounted(){
         // Com mounted() executa automaticamente o especificado ao iniciar.
