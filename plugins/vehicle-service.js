@@ -1,4 +1,4 @@
-import VehicleService from '@/services/VehicleService'
+import VehicleService from '@/services/vehicleService'
 
 export default ({app}) => {
     // Usa-se por padrão "cliente"

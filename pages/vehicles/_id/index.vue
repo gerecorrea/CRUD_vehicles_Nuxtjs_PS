@@ -35,7 +35,7 @@
 <script>
 
 import Forms from '~/components/Form.vue'
-import VehicleService from '@/services/VehicleService'
+import VehicleService from '@/services/vehicleService'
 
 export default {
     components: { 

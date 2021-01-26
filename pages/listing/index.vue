@@ -109,7 +109,7 @@
 import MoreInformation from '~/components/MoreInformation.vue'
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table';
-import VehicleService from '@/services/VehicleService' // Service para backend
+import VehicleService from '@/services/vehicleService' // Service para backend
 
 export default {
     components: {
